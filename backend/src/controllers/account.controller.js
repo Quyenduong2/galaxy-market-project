@@ -2,7 +2,6 @@ const Account = require('../models/account.model');
 const Order = require('../models/order.model');
 const User = require('../models/user.model');
 
-// 7h41
 // Lấy danh sách tài khoản còn bán
 exports.getAvailableAccounts = async (req, res) => {
   // try {
