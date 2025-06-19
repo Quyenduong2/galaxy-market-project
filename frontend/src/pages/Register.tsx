@@ -28,6 +28,8 @@ const Register = () => {
   const [agreeMarketing, setAgreeMarketing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+
+  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -68,7 +70,7 @@ const Register = () => {
       });
       toast({ title: "Đăng ký thành công!", description: "Bạn có thể đăng nhập ngay." });
       // Có thể chuyển hướng sang trang đăng nhập
-      
+
     } catch (err: any) {
       toast({ title: "Lỗi đăng ký", description: err.response?.data.message || "Đã xảy ra lỗi." });
     }

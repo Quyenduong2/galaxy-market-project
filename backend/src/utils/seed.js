@@ -71,7 +71,9 @@ const sampleAccounts = Array.from({ length: 5 }).map((_, i) => {
     status: "available",
     description: `Tài khoản game mẫu số ${i + 1}`,
     username: `user_account_${i + 1}`,
-    password: `pass${1000 + i}`
+    password: `pass${1000 + i}`,
+    createdAt: new Date(),
+    ngayHetHan: new Date(Date.now() + randomInt(1, 365))
   };
 });
 

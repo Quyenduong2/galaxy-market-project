@@ -5,9 +5,27 @@ const User = require('../models/user.model');
 // 7h41
 // Lấy danh sách tài khoản còn bán
 exports.getAvailableAccounts = async (req, res) => {
-  try {
+  // try {
+  //   const { game } = req.query;
+  //   const filter = { status: 'available' };
+  //   if (game) filter.game = game;
+  //   const accounts = await Account.find(filter);
+  //   res.json(accounts);
+  // } catch (err) {
+  //   res.status(500).json({ message: err.message });
+  // }
+    try {
     const { game } = req.query;
     const filter = { status: 'available' };
+
+    // Lọc tài khoản chưa hết hạn
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    filter.$or = [
+      { ngayHetHan: { $exists: false } },
+      { ngayHetHan: { $gte: today } }
+    ];
+
     if (game) filter.game = game;
     const accounts = await Account.find(filter);
     res.json(accounts);

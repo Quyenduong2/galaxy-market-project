@@ -28,7 +28,8 @@ const AddProductModal = ({
     price: '',
     description: '',
     image: '',
-    category: ''
+    category: '',
+    ngayHetHan: ''
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -49,6 +50,41 @@ const AddProductModal = ({
       toast({
         title: "Lỗi",
         description: "Vui lòng điền đầy đủ thông tin bắt buộc",
+        variant: "destructive"
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    if (!formData.ngayHetHan) {
+      toast({
+        title: "Lỗi",
+        description: "Vui lòng chọn ngày hết hạn",
+        variant: "destructive"
+      });
+      setIsLoading(false);
+      return;
+    }
+    // So sánh ngày hết hạn với ngày hiện tại
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const expiryDate = new Date(formData.ngayHetHan);
+    expiryDate.setHours(0, 0, 0, 0);
+
+    if (expiryDate.getTime() === today.getTime()) {
+      toast({
+        title: "Lỗi",
+        description: "Ngày hết hạn không được là ngày hôm nay. Vui lòng chọn ngày khác.",
+        variant: "destructive"
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    if (expiryDate.getTime() < today.getTime()) {
+      toast({
+        title: "Lỗi",
+        description: "Ngày hết hạn phải lớn hơn ngày hiện tại.",
         variant: "destructive"
       });
       setIsLoading(false);
@@ -80,14 +116,15 @@ const AddProductModal = ({
       featured: false,
       status: "available",
       username: "user_" + Math.random().toString(36).substring(2, 8),
-      password: "pass" + Math.floor(Math.random() * 10000)
+      password: "pass" + Math.floor(Math.random() * 10000),
+      ngayHetHan: formData.ngayHetHan || null // Gửi ngày hết hạn
     };
 
     try {
       const res = await axios.post('http://localhost:5000/api/accounts', newAccount);
       onAddProduct(res.data);
-      setFormData({ name: '', seller: '', game: '', price: '', description: '', image: '', category: '' });
-      onOpenChange(false); // Đóng modal từ props
+      setFormData({ name: '', seller: '', game: '', price: '', description: '', image: '', category: '', ngayHetHan: '' });
+      onOpenChange(false);
       toast({
         title: "Thành công",
         description: "Đã thêm sản phẩm mới"
@@ -170,6 +207,15 @@ const AddProductModal = ({
               value={formData.image}
               onChange={(e) => setFormData(prev => ({ ...prev, image: e.target.value }))}
               placeholder="https://example.com/image.jpg"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="expiryDate">Ngày hết hạn</Label>
+            <Input
+              id="expiryDate"
+              type="date"
+              value={formData.ngayHetHan}
+              onChange={(e) => setFormData(prev => ({ ...prev, ngayHetHan: e.target.value }))}
             />
           </div>
           <div className="space-y-2">

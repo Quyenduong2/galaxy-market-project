@@ -21,6 +21,21 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+//   function isValidEmail(email: string) {
+//   // Regex kiểm tra email chuẩn
+//   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+// }
+
+// Trong handleSubmit:
+// if (!isValidEmail(formData.email)) {
+//   toast({
+//     title: "Email không hợp lệ",
+//     description: "Vui lòng nhập đúng định dạng email (ví dụ: ten@email.com)",
+//     variant: "destructive"
+//   });
+//   return;
+// }
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,

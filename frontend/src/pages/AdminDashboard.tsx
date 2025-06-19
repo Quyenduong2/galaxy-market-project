@@ -124,7 +124,6 @@ const AdminDashboard = () => {
     setAddProductModalOpen(false);
     // Gọi lại fetchAccounts để cập nhật danh sách tài khoản chưa bán
     fetchAccounts(selectedCategory);
-    // Nếu muốn cập nhật products (tổng số sản phẩm), cũng có thể setProducts(prev => [...prev, newAccount]);
   };
 
 
@@ -353,6 +352,7 @@ const AdminDashboard = () => {
                       <TableHead>Giá</TableHead>
                       <TableHead>Rank</TableHead>
                       <TableHead>Ngày tạo</TableHead>
+                      <TableHead>Ngày hết hạn</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -363,6 +363,7 @@ const AdminDashboard = () => {
                         <TableCell>{acc.price?.toLocaleString()}đ</TableCell>
                         <TableCell>{acc.rank}</TableCell>
                         <TableCell>{new Date(acc.createdAt).toLocaleDateString()}</TableCell>
+                        <TableCell>{new Date(acc.ngayHetHan).toLocaleDateString()}</TableCell>
                       </TableRow>
                     ))}
                     {filteredAccounts.length === 0 && (

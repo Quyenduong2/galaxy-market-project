@@ -26,7 +26,8 @@ const accountSchema = new mongoose.Schema({
     description: { type: String },                    // Mô tả thêm
     username: { type: String, required: true },       // Tên đăng nhập tài khoản game
     password: { type: String, required: true },       // Mật khẩu tài khoản game
-    createdAt: { type: Date, default: Date.now }
+    createdAt: { type: Date, default: Date.now },
+    ngayHetHan: { type: Date },                         // Ngày hết hạn
 });
 
 module.exports = mongoose.model('Account', accountSchema);

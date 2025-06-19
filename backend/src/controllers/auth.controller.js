@@ -2,12 +2,20 @@ const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+
 exports.register = async (req, res) => {
   try {
     const { email, password, name, username, phone } = req.body;
     if (!email || !password || !name || !username) {
       return res.status(400).json({ message: 'Thiếu thông tin đăng ký' });
     }
+    //  if (!isValidEmail(email)) {
+    //   return res.status(400).json({ message: 'Email không hợp lệ, vui lòng nhập lại.' });
+    // }
     const existing = await User.findOne({ email });
     if (existing) return res.status(400).json({ message: 'Email đã tồn tại' });
 
@@ -27,6 +35,10 @@ exports.login = async (req, res) => {
       // Trả về JSON nếu thiếu trường
       return res.status(400).json({ message: "Thiếu email hoặc mật khẩu" });
     }
+
+    //  if (!isValidEmail(email)) {
+    //   return res.status(400).json({ message: 'Email không hợp lệ, vui lòng nhập lại.' });
+    // }
 
     const user = await User.findOne({ email });
     if (!user) {
