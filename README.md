@@ -4,5 +4,5 @@ B2: npm i
 B3: npm run dev
 
 Backend run 
-cd backend
-node server.js
+B1: cd backend
+B2: node server.js
